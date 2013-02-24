@@ -181,4 +181,51 @@ lookup [] n ()
 lookup ( x :: xs ) zero  p = x 
 lookup ( x :: xs ) ( suc n ) p = lookup xs n p 
 
+{--
+For a type A and an element x of A
+, we define the the family of proofs
+of “being equal to x ”. This family is only inhabited at index
+x where the single proof is refl
+
+for understanding the constuctor 
+data == { A : Set } ( x : A ) : A → Set where 
+   refl : ( == ) x x 
+­-}
+
+data _≡_ { A : Set } ( x : A ) : A → Set where 
+  refl : x ≡ x 
+
+data _≤_ : ℕ → ℕ → Set where 
+   leq-zero : { n : ℕ } → zero ≤ n 
+   leq-suc : { m n : ℕ } → m ≤ n → suc m ≤ suc n 
+
+leq-trans : { l m n : ℕ } → l ≤ m → m ≤ n → l ≤ n 
+leq-trans leq-zero _ = leq-zero 
+leq-trans ( leq-suc p ) ( leq-suc q ) = leq-suc ( leq-trans p q )
+
+min : ℕ → ℕ → ℕ
+min x y with x < y 
+...| true = x 
+...| false = y 
+
+filter : { A : Set } → ( ( x : A )  → Bool ) → List A → List A
+filter p [] = []
+filter p ( x :: xs ) with p x 
+... | true = x :: filter p xs 
+... | false = filter p xs 
+
+data _≠_ : ℕ → ℕ → Set where 
+  z≠s : { n : ℕ } → zero ≠ suc n 
+  s≠z : { n : ℕ } → suc n ≠ zero 
+  s≠s : { m n : ℕ } → m ≠ n → suc m ≠ suc n  
+
+data Equal? ( n m : ℕ ) : Set where 
+  eq : n ≡ m → Equal? n m 
+  neq : n ≠ m → Equal? n m   
+
+
+halve : ℕ → ℕ 
+halve zero = zero 
+halve ( suc zero ) = zero
+halve ( suc ( suc n ) ) = suc ( halve n )
 
