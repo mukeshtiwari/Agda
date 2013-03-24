@@ -104,4 +104,4 @@ test₃ = ok
 index : ∀ { A m } → List# A m → ∀ n → [ n < m ] → A
 index [] n n<m = {!n<m!}
 index (x ::: xs) zero n<m = x
-  index (x ::: xs) (suc y) n<m = {!index xs y n<m!}
+index (x ::: xs) (suc y) n<m = {!index xs y n<m!}
