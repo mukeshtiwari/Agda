@@ -15,16 +15,16 @@ data ℕ⁺ : Set where
   double⁺¹ : ℕ⁺ → ℕ⁺
 
 
-add : ℕ⁺ → ℕ⁺ → ℕ⁺
+add : ℕ⁺ → ℕ⁺ → ℕ⁺ 
 add one one = double one
 add one ( double x ) = double⁺¹ x
-add one ( double⁺¹ x ) = double ( double⁺¹ x )
+add one ( double⁺¹ x ) = double ( add x one )
 add ( double x ) one =  double⁺¹ x
 add ( double x ) ( double y ) = double ( add x y )
-add ( double x ) (  double⁺¹ y ) =  double⁺¹ ( double ( add x y ) )
-add (  double⁺¹ x ) one =   double (  double⁺¹ x )
-add (  double⁺¹ x ) (  double y ) =  double⁺¹ ( double ( add x y ) )
-add (  double⁺¹ x ) (  double⁺¹ y ) = double (  double⁺¹  ( add x y ) )
+add ( double x ) (  double⁺¹ y ) =  double⁺¹ (  add x y )
+add (  double⁺¹ x ) one =   double (  add x one )
+add (  double⁺¹ x ) (  double y ) =  double⁺¹ (  add x y  )
+add (  double⁺¹ x ) (  double⁺¹ y ) = double ( add (  add x y ) one )
 
 
 mult : ℕ⁺ → ℕ⁺ → ℕ⁺
